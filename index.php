@@ -1,120 +1,227 @@
-<?php
-/**
- * Advanced PHP 7 eCommerce Website (https://22digital.co.za)
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <https://www.gnu.org/licenses/>.
- *
- * @copyright Copyright (c) 22 Digital (https://22digital.co.za)
- * @copyright Copyright (c) Justin Hartman (https://justinhartman.co)
- * @author    Justin Hartman <justin@hartman.me> (https://justinhartman.co)
- * @link      https://github.com/justinhartman/complete-php7-ecom-website GitHub Project
- * @since     0.1.0
- * @license   https://opensource.org/licenses/AGPL-3.0 AGPL-3.0
- */
+<!DOCTYPE html>
+<html lang="en">
+<?php include 'pages/head.php'; ?>
 
-/**
- * Check platform requirements.
- */
-require __DIR__ . '/config/requirements.php';
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="200">
 
-/**
- * Load the bootstrap file.
- */
-require __DIR__ . '/config/bootstrap.php';
+  <!-- <div class="site-wrap"> -->
 
-/**
- * Load the template files.
- */
-include INC . 'header.php';
-include INC . 'nav.php';
-?>
-
-<!-- SHOP CONTENT -->
-<section id="content">
-    <div class="content-blog">
-        <div class="container">
-            <div class="row">
-                <div class="page_header text-center">
-                    <h2>Shop</h2>
-                    <p>Browse our collection of Products to find just what you are looking for.</p>
-                </div>
-                <div class="col-md-12">
-                        <div id="shop-mason" class="shop-mason-3col">
-                            <div class="row">
-                            <?php
-                            // Get a list of all the products; either for the home page or the
-                            // individual category pages.
-                            if (isset($_GET['id']) & !empty($_GET['id'])) {
-                                $catId = $database->Escape($_GET['id']);
-                                $products = $database->select("id, name, thumb, price", "products", "WHERE `catid`='$catId'");
-                            } else {
-                                $products = $database->select("id, name, thumb, price", "products");
-                            }
-                            // Run through all the products and display the items.
-                            while ($product = $products->fetch_assoc()):
-                                // This checks for every third product item in the list and
-                                // outputs a clearfix component to ensure our layout renders
-                                // as expected and ensures the products all line up correctly.
-                                $count++;
-                                if ($count % 4 == 0) {
-                                    echo '<div class="clearfix space35"></div>';
-                                }
-                            ?>
-                                <div class="shop-item">
-                                    <div class="product">
-                                        <div class="product-thumb">
-                                            <img src="<?php echo getenv('STORE_URL'); ?>/admin/<?php echo $product['thumb']; ?>" class="img-responsive" width="250px" alt="">
-                                            <div class="product-overlay">
-                                           
-                                                    <a href="<?php echo getenv('STORE_URL'); ?>/single.php?id=<?php echo $product['id']; ?>" class="fa fa-link"></a>
-                                                    <a href="<?php echo getenv('STORE_URL'); ?>/addtocart.php?id=<?php echo $product['id']; ?>" class="fa fa-shopping-cart"></a>
-                                             
-                                            </div>
-                                        </div>
-                                        <?php // TODO: Need to add functionality so people can rate items.  ?>
-                                        <div class="rating">
-                                            <span class="fa fa-star act"></span>
-                                            <span class="fa fa-star act"></span>
-                                            <span class="fa fa-star act"></span>
-                                            <span class="fa fa-star act"></span>
-                                            <span class="fa fa-star act"></span>
-                                        </div>
-                                        <h2 class="product-title"><a href="<?php echo getenv('STORE_URL'); ?>/single.php?id=<?php echo $product['id']; ?>"><?php echo $product['name']; ?></a></h2>
-                                        <div class="product-price"><?php echo getenv('STORE_CURRENCY') . $product['price']; ?><span></span></div>
-                                    </div>
-                                </div>
-                            <?php
-                        endwhile; ?>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                    <!-- Pagination -->
-                    <?php // TODO: Pagination doesn't work. Need to build in the functionality. ?>
-                    <div class="page_nav">
-                        <a href=""><i class="fa fa-angle-left"></i></a>
-                        <a href="" class="active">1</a>
-                        <a href="">2</a>
-                        <a href="">3</a>
-                        <a class="no-active">...</a>
-                        <a href="">9</a>
-                        <a href=""><i class="fa fa-angle-right"></i></a>
-                    </div>
-                    <!-- End Pagination -->
-                </div>
-            </div>
-        </div>
+  <div class="site-mobile-menu site-navbar-target">
+    <div class="site-mobile-menu-header">
+      <div class="site-mobile-menu-close mt-3">
+        <span class="icon-close2 js-menu-toggle"></span>
+      </div>
     </div>
-</section>
+    <div class="site-mobile-menu-body"></div>
+  </div>
 
-<?php include INC . 'footer.php'; ?>
+  <header class="site-navbar py-3 js-site-navbar site-navbar-target" role="banner" id="site-navbar">
+
+    <div class="container">
+      <div class="row align-items-center">
+
+        <div class="col-11 col-xl-2 site-logo">
+          <h1 class="mb-0"><a href="index.php" class="text-white h5 mb-0">Royal Express</a></h1>
+        </div>
+        <div class="col-12 col-md-10 d-none d-xl-block">
+          <nav class="site-navigation position-relative text-right" role="navigation">
+
+            <ul class="site-menu js-clone-nav mx-auto d-none d-lg-block">
+              <li><a href="#section-home" class="nav-link">Home</a></li>
+              <li>
+                <a href="#section-about" class="nav-link">About Us</a>
+              </li>
+              <li><a href="#section-gallery" class="nav-link">Gallery</a></li>
+              <li><a href="#section-contact" class="nav-link">Contact</a></li>
+              <?php if (isset($_SESSION['customer'])) : ?>
+                <li><a href="profile.php" class="nav-link">Profile</a></li>
+                <li><a href="tracking.php" class="nav-link">Tracking</a></li>
+                <li><a href="admin/logout.php" class="nav-link">Logout</a></li>
+              <?php else : ?>
+                <li><a href="admin/login.php" class="nav-link">Login</a></li>
+              <?php endif; ?>
+              <li><a href="request.php" class="nav-link">Request</a></li>
+            </ul>
+          </nav>
+        </div>
+
+
+        <div class="d-inline-block d-xl-none ml-md-0 mr-auto py-3" style="position: relative; top: 3px;"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu h3"></span></a></div>
+
+      </div>
+
+    </div>
+    </div>
+
+  </header>
+
+
+
+  <div class="site-blocks-cover overlay" style="background-image: url(<?php echo $header_src; ?>);" data-aos="fade" data-stellar-background-ratio="0.5" id="section-home">
+    <div class="container">
+      <div class="row align-items-center justify-content-center text-center">
+
+        <div class="col-md-8" data-aos="fade-up" data-aos-delay="400">
+
+
+          <h1 class="text-white font-weight-light text-uppercase font-weight-bold" data-aos="fade-up"><?php echo $res['header_title']; ?></h1>
+          <p class="mb-5" data-aos="fade-up" data-aos-delay="100"><?php echo $res['header_desc']; ?></p>
+          <p data-aos="fade-up" data-aos-delay="200"><a href="request.php" class="btn btn-primary py-3 px-5 text-white">Get Started!</a></p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-section" id="section-about">
+    <div class="container">
+      <div class="row mb-5">
+
+        <div class="col-md-5 ml-auto mb-5 order-md-2" data-aos="fade-up" data-aos-delay="100">
+          <img src="<?php echo $about_src; ?>" alt="Image" class="img-fluid rounded">
+        </div>
+        <div class="col-md-6 order-md-1" data-aos="fade-up">
+          <div class="text-left pb-1 border-primary mb-4">
+            <h2 class="text-primary"><?php echo $res['about_title']; ?></h2>
+          </div>
+          <p><?php echo $res['about_desc']; ?></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="site-section block-13" id="section-gallery">
+
+    <div class="container">
+      <div class="row justify-content-center mb-5">
+        <div class="col-md-7 text-center border-primary">
+          <h2 class="mb-0 text-primary">Gallery</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="owl-carousel nonloop-block-13">
+      <?php
+      $getall = getAllgalleryImages();
+      while ($row = mysqli_fetch_assoc($getall)) {
+        $img = $row['gallery_image'];
+        $img_src = "server/uploads/gallery/" . $img; ?>
+        <div>
+          <a href="#" class="unit-1 text-center">
+            <img src="<?php echo $img_src; ?>" alt="Image" class="img-fluid">
+            <div class="unit-1-text">
+            </div>
+          </a>
+        </div>
+      <?php } ?>
+
+    </div>
+  </div>
+
+
+  <div class="site-blocks-cover overlay inner-page-cover" style="background-image: url(<?php echo $background_image_src; ?>); background-attachment: fixed;">
+    <div class="container">
+      <div class="row align-items-center justify-content-center text-center">
+
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="site-section bg-light" id="section-contact">
+    <div class="container">
+      <div class="row justify-content-center mb-5">
+        <div class="col-md-7 text-center border-primary">
+          <h2 class="font-weight-light text-primary">Contact Us</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-7 mb-5">
+
+
+
+          <form action="#" class="p-5 bg-white" method="post">
+
+
+            <div class="row form-group">
+              <div class="col-md-12 mb-3 mb-md-0">
+                <label class="text-black" for="fname">Name</label>
+                <input type="text" name="name" id="name" class="form-control">
+              </div>
+            </div>
+
+            <div class="row form-group">
+
+              <div class="col-md-12">
+                <label class="text-black" for="email">Email</label>
+                <input type="email" name="email" id="email" class="form-control">
+              </div>
+            </div>
+
+            <div class="row form-group">
+
+              <div class="col-md-12">
+                <label class="text-black" for="subject">Subject</label>
+                <input type="subject" name="subject" id="subject" class="form-control">
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-md-12">
+                <label class="text-black" for="message">Message</label>
+                <textarea name="message" name="message" id="message" cols="30" rows="4" class="form-control"></textarea>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-md-12">
+                <input type="button" onclick="addContactMessage(this.form)" value="Send Message" class="btn btn-primary py-2 px-4 text-white">
+              </div>
+            </div>
+
+
+          </form>
+        </div>
+        <div class="col-md-5">
+
+          <div class="p-4 mb-3 bg-white">
+            <p class="mb-0 font-weight-bold">Address</p>
+            <p class="mb-4"><?php echo $res['company_address']; ?></p>
+
+            <p class="mb-0 font-weight-bold">Phone</p>
+            <p class="mb-4"><a href="#"><?php echo $res['company_phone']; ?></a></p>
+
+            <p class="mb-0 font-weight-bold">Email Address</p>
+            <p class="mb-0"><a href="#"><?php echo $res['company_email']; ?></a></p>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <?php include 'pages/footer.php'; ?>
+  <!-- </div> -->
+
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/jquery.countdown.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/bootstrap-datepicker.min.js"></script>
+  <script src="js/aos.js"></script>
+
+  <script src="js/main.js"></script>
+
+</body>
+
+</html>

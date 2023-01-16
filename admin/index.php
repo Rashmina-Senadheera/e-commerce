@@ -1,119 +1,264 @@
-<?php
-/**
- * Advanced PHP 7 eCommerce Website (https://22digital.co.za)
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <https://www.gnu.org/licenses/>.
- *
- * @copyright Copyright (c) 22 Digital (https://22digital.co.za)
- * @copyright Copyright (c) Justin Hartman (https://justinhartman.co)
- * @author    Justin Hartman <justin@hartman.me> (https://justinhartman.co)
- * @link      https://github.com/justinhartman/complete-php7-ecom-website GitHub Project
- * @since     0.1.0
- * @license   https://opensource.org/licenses/AGPL-3.0 AGPL-3.0
- */
+<!DOCTYPE html>
+<html lang="en">
+<?php include 'pages/head.php'; ?>
+<?php include 'admin.php'; ?>
 
-/**
- * Check platform requirements.
- */
-require '../config/requirements.php';
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between mt-0 px-2">
 
-/**
- * Load the bootstrap file.
- */
-require '../config/bootstrap.php';
+                        <h1 class="mb-0"><a href="index.php" class="text-warning h5 mb-0 px-2 ">Royal Express </a></h1>
 
-/**
- * Check if the user is logged in or not.
- */
-if (!isset($_SESSION['email']) & empty($_SESSION['email'])) {
-    header('location: login.php');
-}
-
-/**
- * Load the template files.
- */
-include ADMIN_INC . 'header.php';
-?>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
-google.charts.setOnLoadCallback(drawChart1);
-
-function drawChart() {
-    var data = google.visualization.arrayToDataTable([
-        ['Year', 'Sales', 'Expenses'],
-        ['2004',  1000,      400],
-        ['2005',  1170,      460],
-        ['2006',  660,       1120],
-        ['2007',  1030,      540]
-    ]);
-
-    var options = {
-        title: 'Weekly Revenue',
-        curveType: 'function',
-        legend: { position: 'bottom' }
-    };
-
-    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-    chart.draw(data, options);
-}
-function drawChart1() {
-    var data = google.visualization.arrayToDataTable([
-        ['Year', 'Sales', 'Expenses'],
-        ['2004',  1000,      400],
-        ['2005',  1170,      460],
-        ['2006',  660,       1120],
-        ['2007',  1030,      540]
-    ]);
-
-    var options = {
-        title: 'Weekly Orders',
-        curveType: 'function',
-        legend: { position: 'bottom' }
-    };
-
-    var chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
-
-    chart.draw(data, options);
-}
-</script>
-
-<?php include ADMIN_INC . 'nav.php'; ?>
-
-<!-- SHOP CONTENT -->
-<section id="content">
-    <div class="content-blog">
-        <div class="container">
-            <div class="row">
-                <div class="page_header text-center">
-                    <h2>Dashboard</h2>
-                    <p>An overview of key insights for your Store.</p>
-                </div>
-                <div class="col-md-6">
-                    <div class="row">
-                        <div id="curve_chart" style="width: 550px; height: 300px"></div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="row">
-                        <div id="curve_chart1" style="width: 550px; height: 300px"></div>
-                    </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-item active ">
+                            <a href="index.php" class='sidebar-link'>
+                                <i class="bi bi-grid-fill"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item ">
+                            <a href="customer.php" class='sidebar-link'>
+                                <i class="bi bi-people-fill"></i>
+                                <span>Customer</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="price.php" class='sidebar-link'>
+                                <i class="bi bi-table"></i>
+                                <span>Price Table</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a href="courier.php" class='sidebar-link'>
+                                <i class="bi bi-truck"></i>
+                                <span>Courier</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="message.php" class='sidebar-link'>
+                                <i class="bi bi-chat"></i>
+                                <span>Message</span>
+                            </a>
+                        </li>
+                        <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == 'admin') : ?>
+                            <li class="sidebar-item">
+                                <a href="branch.php" class='sidebar-link'>
+                                    <i class="bi bi-columns"></i>
+                                    <span>Branchs</span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                        <li class="sidebar-item">
+                            <a href="employee.php" class='sidebar-link'>
+                                <i class="bi bi-person-fill"></i>
+                                <span>Employee </span>
+                            </a>
+                        </li>
+                        <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == 'admin') : ?>
+                            <li class="sidebar-item">
+                                <a href="area.php" class='sidebar-link'>
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                    <span>Area</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="gallery.php" class='sidebar-link'>
+                                    <i class="bi bi-images"></i>
+                                    <span>Gallery</span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                        <li class="sidebar-item">
+                            <a href="settings.php" class='sidebar-link'>
+                                <i class="bi bi-gear-fill"></i>
+                                <span>Settings</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a href="logout.php" class='sidebar-link'>
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Log Out</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
+                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
             </div>
         </div>
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+            <div class="page-content">
+                <section class="row">
+                    <div class="col-12 col-lg-12">
+                        <div class="row">
+                            <div class="col-6 col-lg-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body px-3 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="stats-icon">
+                                                    <i class="iconly-boldBookmark"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <h6 class="text-muted font-semibold">Branches</h6>
+                                                <h6 class="font-extrabold mb-0"><?php echo dataCount('branch'); ?></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-lg-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body px-3 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="stats-icon">
+                                                    <i class="iconly-boldProfile"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <h6 class="text-muted font-semibold">Customers</h6>
+                                                <h6 class="font-extrabold mb-0"><?php echo dataCount('customer'); ?></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-lg-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body px-3 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="stats-icon">
+                                                    <i class="iconly-boldAdd-User"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <h6 class="text-muted font-semibold">Employee</h6>
+                                                <h6 class="font-extrabold mb-0"><?php echo dataCount('employee'); ?></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-lg-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body px-3 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="stats-icon">
+                                                    <i class="iconly-boldBookmark"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <h6 class="text-muted font-semibold">Courier Requests</h6>
+                                                <h6 class="font-extrabold mb-0"><?php echo dataCount('request'); ?></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-12">
+                        <div class="row">
+                            <div class="col-6 col-lg-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body px-3 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="stats-icon">
+                                                    <i class="iconly-boldShow"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <h6 class="text-muted font-semibold">Pending Orders</h6>
+                                                <h6 class="font-extrabold mb-0"><?php echo dataCountWhere('request', ' tracking_status = 1 '); ?></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-lg-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body px-3 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="stats-icon">
+                                                    <i class="iconly-boldBookmark"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <h6 class="text-muted font-semibold">Accepted</h6>
+                                                <h6 class="font-extrabold mb-0"><?php echo dataCountWhere('request', ' tracking_status = 2 '); ?></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-lg-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body px-3 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="stats-icon">
+                                                    <i class="iconly-boldBookmark"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <h6 class="text-muted font-semibold">Cancel Orders</h6>
+                                                <h6 class="font-extrabold mb-0"><?php echo dataCountWhere('request', ' tracking_status = 5 '); ?></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-lg-3 col-md-6">
+                                <div class="card">
+                                    <div class="card-body px-3 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="stats-icon">
+                                                    <i class="iconly-boldBookmark"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <h6 class="text-muted font-semibold">Completed Orders</h6>
+                                                <h6 class="font-extrabold mb-0"><?php echo dataCountWhere('request', ' tracking_status = 3 '); ?></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+
+        </div>
     </div>
-</section>
-<?php include ADMIN_INC . 'footer.php'; ?>
+    <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="assets/js/pages/dashboard.js"></script>
+
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>
